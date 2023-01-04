@@ -25,10 +25,13 @@ clevertap.privacy.push({useIP: false});
 })();
 
 // render fallback content
-const fallback = document.getElementById("fallback");
-const mainWrapper = document.getElementById("main-wrapper");
-const fallbackNode = fallback.content.cloneNode(true);
-mainWrapper.appendChild(fallbackNode);
+var fallbackTimeout = setTimeout(function () {
+  const fallback = document.getElementById("fallback");
+  const mainWrapper = document.getElementById("main-wrapper");
+  const fallbackNode = fallback.content.cloneNode(true);
+  mainWrapper.appendChild(fallbackNode);
+}, 2000);
+
 
 clevertap.event.push("Login Page Visited");
 
@@ -58,6 +61,7 @@ function renderLoginPage (data) {
 }
 
 document.addEventListener("CT_web_native_display", function(event) {
+  clearTimeout(fallbackTimeout);
   const data = event.detail;
   const topic = data.kv.topic;
   switch (topic) {
